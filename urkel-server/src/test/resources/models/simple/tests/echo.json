@@ -1,0 +1,12 @@
+[
+  {
+    "comment": "register new user",
+    "request": {
+      "method": "put",
+      "uri": "auth",
+      "entity": {
+        "name": "testuser"
+      }
+    }
+  }
+]

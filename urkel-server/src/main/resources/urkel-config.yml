@@ -1,0 +1,69 @@
+# Things in {{CURLIES}} will be read from the process environment when the server starts up.
+# The jrun launcher will typically load these from ~/.wl.env
+
+serverName: urkel-api
+
+#publicUriBase: https://127.0.0.1
+publicUriBase: {{PUBLIC_BASE_URI}}
+
+database:
+  driver: org.postgresql.Driver
+  url: jdbc:postgresql://127.0.0.1:5432/urkel
+  user: urkel
+  password: {{URKEL_DB_PASS}}
+
+  encryptionEnabled: true
+  encryptionKey: '{{URKEL_DB_ENCRYPTION_KEY}}'
+  encryptorPoolSize: 5
+
+  hibernate:
+    entityPackages:
+    - urkel.model
+    - org.cobbzilla.wizard.model.crypto   # for encrypted column support
+    - org.cobbzilla.wizard.model.json     # for JSONB column support
+    dialect: org.cobbzilla.wizard.model.json.JSONBPostgreSQLDialect
+    showSql: false
+    hbm2ddlAuto: validate
+    validationMode: ddl
+
+staticAssets:
+  baseUri: /
+  assetRoot: site/
+  localOverride: {{ASSETS_DIR}}
+  mustacheCacheEnabled: false
+  mustacheResourceRoot: site/
+  utilPaths:
+    INDEX_PATH: /index.html
+    INDEX_ALIASES: /:/index.php
+    LOCALIZE: /localize
+
+http:
+  port: {{URKEL_SERVER_PORT}}
+  baseUri: /api
+
+jersey:
+  resourcePackages:
+   - urkel.resources
+   - org.cobbzilla.wizard.server
+   - org.cobbzilla.wizard.filters
+   - org.cobbzilla.wizard.exceptionmappers
+  requestFilters: [ urkel.auth.UrkelAuthFilter ]
+  responseFilters:
+   - org.cobbzilla.wizard.filters.ScrubbableScrubber
+   - org.cobbzilla.wizard.filters.EntityTypeHeaderFilter
+
+smtp:
+  host: {{URKEL_SMTP_SERVER}}
+  port: {{URKEL_SMTP_PORT}}
+  user: {{URKEL_SMTP_USER}}
+  password: {{URKEL_SMTP_PASS}}
+  tlsEnabled: true
+
+redis:
+  key: '{{URKEL_REDIS_ENCRYPTION_KEY}}'
+  prefix: urkel
+
+assetStorage:
+  type: local
+  config:
+    baseDir: /tmp/urkel-assets

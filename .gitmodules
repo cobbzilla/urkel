@@ -1,0 +1,27 @@
+[submodule "utils/cobbzilla-parent"]
+	path = utils/cobbzilla-parent
+	url = git@github.com:cobbzilla/cobbzilla-parent.git
+[submodule "utils/cobbzilla-utils"]
+	path = utils/cobbzilla-utils
+	url = git@github.com:cobbzilla/cobbzilla-utils.git
+[submodule "utils/cobbzilla-wizard"]
+	path = utils/cobbzilla-wizard
+	url = git@github.com:cobbzilla/cobbzilla-wizard.git
+[submodule "utils/merge-yml"]
+	path = utils/merge-yml
+	url = git@github.com:cobbzilla/merge-yml.git
+[submodule "utils/restex"]
+	path = utils/restex
+	url = git@github.com:cobbzilla/restex.git
+[submodule "utils/jestrel"]
+	path = utils/jestrel
+	url = git@github.com:cobbzilla/jestrel.git
+[submodule "utils/templated-mail-sender"]
+	path = utils/templated-mail-sender
+	url = git@github.com:cobbzilla/templated-mail-sender.git
+[submodule "utils/authy-java"]
+	path = utils/authy-java
+	url = git@github.com:cobbzilla/authy-java.git
+[submodule "utils/cloudos-lib"]
+	path = utils/cloudos-lib
+	url = git@github.com:cloudstead/cloudos-lib.git
