@@ -16,13 +16,13 @@ import javax.ws.rs.core.Response;
 
 import static org.cobbzilla.util.http.HttpContentTypes.APPLICATION_JSON;
 import static org.cobbzilla.wizard.resources.ResourceUtil.*;
-import static urkel.ApiConstants.COMMAND_TEMPLATES_ENDPOINT;
+import static urkel.ApiConstants.COMMANDS_ENDPOINT;
 
-@Path(COMMAND_TEMPLATES_ENDPOINT)
+@Path(COMMANDS_ENDPOINT)
 @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
 @Service
-public class UrkelCommandDriversResource {
+public class UrkelCommandsResource {
 
     @Autowired private UrkelCommandDriverDAO commandDriverDAO;
     @Autowired private UrkelCommandService commandService;
@@ -59,7 +59,7 @@ public class UrkelCommandDriversResource {
 
         final UrkelProfile profile = userPrincipal(ctx);
         final UrkelCommandDriver template = commandDriverDAO.findByName(name);
-        // if (template == null || (template.isAdmin() && !profile.isAdmin())) return notFound(name);
+        if (template == null /*|| (template.isAdmin() && !profile.isAdmin())*/) return notFound(name);
 
         return ok(commandService.start(new UrkelCommand(profile, template, params)));
     }
@@ -71,7 +71,7 @@ public class UrkelCommandDriversResource {
 
         final UrkelProfile profile = userPrincipal(ctx);
         final UrkelCommandDriver template = commandDriverDAO.findByName(name);
-        // if (template == null || (template.isAdmin() && !profile.isAdmin())) return notFound(name);
+        if (template == null /*|| (template.isAdmin() && !profile.isAdmin())*/) return notFound(name);
 
         return ok(commandService.status(token));
     }

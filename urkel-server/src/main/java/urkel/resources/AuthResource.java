@@ -3,6 +3,7 @@ package urkel.resources;
 import com.sun.jersey.api.core.HttpContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import urkel.auth.UrkelAuthResponse;
 import urkel.dao.SessionDAO;
 import urkel.dao.UrkelProfileDAO;
 import urkel.model.UrkelProfile;
@@ -34,7 +35,8 @@ public class AuthResource {
 
         final UrkelProfile newProfile = new UrkelProfile(request);
         final UrkelProfile caller = optionalUserPrincipal(ctx);
-        return ok(sessionDAO.create(profileDAO.create(newProfile)));
+        final UrkelProfile created = profileDAO.create(newProfile);
+        return ok(new UrkelAuthResponse(sessionDAO.create(created), created));
     }
 
     @POST @Path("/{name}")
@@ -42,7 +44,7 @@ public class AuthResource {
                           @PathParam("name") String name) {
         final UrkelProfile profile = profileDAO.findByName(name);
         if (profile == null) return notFound(name);
-        return ok(sessionDAO.create(profile));
+        return ok(new UrkelAuthResponse(sessionDAO.create(profile), profile));
     }
 
     @GET @Path("/me") public Response me(@Context HttpContext ctx) { return ok(userPrincipal(ctx)); }

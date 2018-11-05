@@ -7,6 +7,52 @@
       "entity": {
         "name": "testuser"
       }
+    },
+    "response": {
+      "sessionName": "testuser",
+      "session": "sessionId"
+    }
+  },
+
+  {
+    "comment": "create an echo command",
+    "request": {
+      "uri": "commands",
+      "method": "put",
+      "entity": {
+        "name": "echo",
+        "description": "echo back what you send it",
+        "inParams": [
+          {"name": "textToEcho", "type": "string"}
+        ],
+        "script": "echo -n '<<textToEcho>>'"
+      }
+    }
+  },
+
+  {
+    "comment": "run the command with some input",
+    "request": {
+      "uri": "commands/echo",
+      "entity": [
+        {"name": "textToEcho", "value": "__this_is_a_test__"}
+      ]
+    },
+    "response": {
+      "store": "cmd"
+    }
+  },
+
+  {
+    "comment": "check status of command, should have completed successfully with output",
+    "request": {
+      "uri": "commands/echo/status/{{cmd.id}}"
+    },
+    "response": {
+      "check": [
+        {"condition": "json.status == 0"},
+        {"condition": "json.stdout == '__this_is_a_test__'"}
+      ]
     }
   }
 ]
